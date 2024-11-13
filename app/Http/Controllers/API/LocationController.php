@@ -1,65 +1,73 @@
 <?php
-
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Location;
 use Illuminate\Http\Request;
 
 class LocationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // GET: /api/locations
     public function index()
     {
-        //
+        return response()->json(Location::all(), 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    // POST: /api/locations
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'description' => 'nullable|string',
+            'category' => 'required|string',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+        ]);
+
+        $location = Location::create($validated);
+        return response()->json($location, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // GET: /api/locations/{id}
+    public function show($id)
     {
-        //
+        $location = Location::find($id);
+        if ($location) {
+            return response()->json($location, 200);
+        } else {
+            return response()->json(['message' => 'Location not found'], 404);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    // PUT: /api/locations/{id}
+    public function update(Request $request, $id)
     {
-        //
+        $location = Location::find($id);
+        if (!$location) {
+            return response()->json(['message' => 'Location not found'], 404);
+        }
+
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'description' => 'nullable|string',
+            'category' => 'required|string',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+        ]);
+
+        $location->update($validated);
+        return response()->json($location, 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    // DELETE: /api/locations/{id}
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $location = Location::find($id);
+        if ($location) {
+            $location->delete();
+            return response()->json(['message' => 'Location deleted'], 200);
+        } else {
+            return response()->json(['message' => 'Location not found'], 404);
+        }
     }
 }
