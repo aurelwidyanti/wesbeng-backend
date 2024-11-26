@@ -38,7 +38,7 @@ class TrashResource extends Resource
                         Forms\Components\Select::make('type')
                             ->options([
                                 'organic' => 'Organik',
-                                'non-organic' => 'Non-Organik',
+                                'anorganic' => 'Anorganik',
                                 'B3' => 'Bahan Berbahaya & Beracun'
                             ])
                             ->required()
@@ -86,10 +86,11 @@ class TrashResource extends Resource
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('type')
+                    ->label('Category')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'organic' => 'success',
-                        'non-organic' => 'warning',
+                        'anorganic' => 'warning',
                         'B3' => 'danger',
                         default => 'gray'
                     }),
@@ -113,7 +114,7 @@ class TrashResource extends Resource
                 Tables\Filters\SelectFilter::make('type')
                     ->options([
                         'organic' => 'Organik',
-                        'non-organic' => 'Non-Organik',
+                        'anorganic' => 'Anorganik',
                         'B3' => 'Bahan Berbahaya & Beracun'
                     ]),
                 Tables\Filters\SelectFilter::make('status')

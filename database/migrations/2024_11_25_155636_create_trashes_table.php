@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('trashes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('location_id')->constrained()->onDelete('cascade');
-            $table->enum('type', ['organic', 'non-organic', 'B3']);
+            $table->enum('type', ['organic', 'anorganic', 'B3']);
             $table->decimal('volume', 10, 2); 
             $table->decimal('weight', 10, 2); 
             $table->date('collection_date');

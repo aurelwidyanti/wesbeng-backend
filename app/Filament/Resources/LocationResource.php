@@ -47,7 +47,7 @@ class LocationResource extends Resource
                             ->required()
                             ->options([
                                 'organic' => 'Organik',
-                                'non-organic' => 'Non-Organik', 
+                                'anorganic' => 'Anorganik', 
                                 'B3' => 'Bahan Berbahaya & Beracun'
                             ])
                             ->searchable(),
@@ -84,7 +84,7 @@ class LocationResource extends Resource
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'organic' => 'success',
-                        'non-organic' => 'warning',
+                        'anorganic' => 'warning',
                         'B3' => 'danger',
                         default => 'gray'
                     })
@@ -108,7 +108,7 @@ class LocationResource extends Resource
                     ->label('Filter by Category')
                     ->options([
                         'organic' => 'Organik',
-                        'non-organic' => 'Non-Organik', 
+                        'anorganic' => 'Anorganik', 
                         'B3' => 'Bahan Berbahaya & Beracun'
                     ]),
             ])
