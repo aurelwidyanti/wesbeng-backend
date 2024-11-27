@@ -35,14 +35,16 @@ class TrashResource extends Resource
                             ->preload()
                             ->label('Collection Location'),
 
-                        Forms\Components\Select::make('type')
+                            Forms\Components\Select::make('type')
                             ->options([
                                 'organic' => 'Organik',
                                 'anorganic' => 'Anorganik',
                                 'B3' => 'Bahan Berbahaya & Beracun'
                             ])
                             ->required()
-                            ->label('Waste Type'),
+                            ->label('Waste Type')
+                            ->rule('in:organic,anorganic,B3'),
+                        
 
                         Forms\Components\Group::make()
                             ->schema([
