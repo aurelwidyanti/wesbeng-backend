@@ -104,7 +104,8 @@ class TrashResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('collection_date')
                     ->date()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\BadgeColumn::make('status')
                     ->colors([
                         'warning' => 'pending',

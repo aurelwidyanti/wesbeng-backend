@@ -94,7 +94,8 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('email_verified_at')
                     ->dateTime() 
                     ->sortable()
-                    ->label('Email Verification Date'),
+                    ->label('Email Verification Date')
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('role')
