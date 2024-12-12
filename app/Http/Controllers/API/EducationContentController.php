@@ -17,12 +17,12 @@ class EducationContentController extends Controller
      */
     public function index()
     {
-        $companies = EducationContent::all();
+        $educationContents = EducationContent::all();
 
         return response()->json([
             'status' => 'success',
             'message' => 'Education Contents retrieved successfully',
-            'data' => EducationContentResource::collection($companies)
+            'data' => EducationContentResource::collection($educationContents)
         ], Response::HTTP_OK);
     }
 
@@ -41,6 +41,14 @@ class EducationContentController extends Controller
             'category' => 'required|in:organic,inorganic,B3'
         ]);
 
+        if (!$validated) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation error',
+                'errors' => $validated
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('education-contents');
         }
@@ -57,11 +65,20 @@ class EducationContentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\EducationContent  $educationContent
+     * @param  int $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(EducationContent $educationContent)
+    public function show(int $id)
     {
+        $educationContent = EducationContent::find($id);
+
+        if (!$educationContent) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Education Content not found'
+            ], Response::HTTP_NOT_FOUND);
+        }
+        
         return response()->json([
             'status' => 'success',
             'message' => 'Education Content retrieved successfully',
@@ -73,10 +90,10 @@ class EducationContentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\EducationContent  $educationContent
+     * @param  int $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, EducationContent $educationContent)
+    public function update(Request $request, int $id)
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -84,6 +101,23 @@ class EducationContentController extends Controller
             'image' => 'required|string',
             'category' => 'required|in:organic,inorganic,B3'
         ]);
+
+        if (!$validated) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation error',
+                'errors' => $validated
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        $educationContent = EducationContent::find($id);
+
+        if (!$educationContent) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Education Content not found'
+            ], Response::HTTP_NOT_FOUND);
+        }
 
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('education-contents');
@@ -101,11 +135,20 @@ class EducationContentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\EducationContent  $educationContent
+     * @param  int $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(EducationContent $educationContent)
+    public function destroy(int $id)
     {
+        $educationContent = EducationContent::find($id);
+
+        if (!$educationContent) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Education Content not found'
+            ], Response::HTTP_NOT_FOUND);
+        }
+
         $educationContent->delete();
 
         return response()->json([
