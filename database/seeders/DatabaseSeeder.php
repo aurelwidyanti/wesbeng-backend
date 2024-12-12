@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            EducationContentSeeder::class
+            EducationContentSeeder::class,
+            LocationSeeder::class,
         ]);
     }
 }

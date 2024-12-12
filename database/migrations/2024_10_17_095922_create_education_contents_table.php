@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('content');
             $table->string('image');
-            $table->enum('category', ['organic', 'anorganic', 'B3']);
+            $table->enum('category', ['organic', 'inorganic', 'B3']);
             $table->timestamps();
         });
     }
