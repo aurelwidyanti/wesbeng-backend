@@ -18,28 +18,13 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        $validatedData= Validator::make($request->all(),[
+        $request->validate([
             'name' => 'required|string',
-            'username' => 'required|string|unique:users,username',
-            'email' => 'required|email|unique:users,email',
-            'phone' => 'required|string',
-            'password' => 'required|string|min:6'
-        ], [
-            'name.required' => 'Name is required',
-            'username.unique' => 'Username already exists',
-            'email.required' => 'Email is required',
-            'email.unique' => 'Email already exists',
-            'phone.required' => 'Phone is required',
-            'password.required' => 'Password is required',
-            'password.min' => 'Password must be at least 6 characters'
+            'username' => 'required|string|unique:users',
+            'email' => 'required|email|unique:users',
+            'phone' => 'required|string|unique:users',
+            'password' => 'required|string|confirmed'
         ]);
-
-        if ($validatedData->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => $validatedData->errors()
-            ], 400);
-        }
 
         $user = User::create([
             'name' => $request->name,
@@ -71,19 +56,12 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        if (!$request->email) {
-            $credentials = [
-                'username' => $request->username,
-                'password' => $request->password
-            ];
-        } else {
-            $credentials = [
-                'email' => $request->email,
-                'password' => $request->password
-            ];
-        }
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string'
+        ]);
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($request->only('email', 'password'))) {
             $user = Auth::user();
             /** @var \App\Models\User $user **/
             $token = $user->createToken('auth_token')->plainTextToken;
