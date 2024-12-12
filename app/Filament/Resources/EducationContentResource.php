@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\EducationalContentResource\Pages;
-use App\Models\EducationalContent;
+use App\Filament\Resources\EducationContentResource\Pages;
+use App\Models\EducationContent;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,13 +12,13 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Section;
 
-class EducationalContentResource extends Resource
+class EducationContentResource extends Resource
 {
-    protected static ?string $model = EducationalContent::class;
+    protected static ?string $model = EducationContent::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-book-open';
 
-    protected static ?string $navigationLabel = 'Educational Contents';
+    protected static ?string $navigationLabel = 'Education Contents';
 
     protected static ?int $navigationSort = 2;
 
@@ -27,7 +27,7 @@ class EducationalContentResource extends Resource
         return $form
             ->schema([
                 Section::make('Content Details')
-                    ->description('Manage educational content details')
+                    ->description('Manage education content details')
                     ->schema([
                         Forms\Components\TextInput::make('title')
                             ->label('Title')
@@ -131,9 +131,9 @@ class EducationalContentResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListEducationalContents::route('/'),
-            'create' => Pages\CreateEducationalContent::route('/create'),
-            'edit' => Pages\EditEducationalContent::route('/{record}/edit'),
+            'index' => Pages\ListEducationContents::route('/'),
+            'create' => Pages\CreateEducationContent::route('/create'),
+            'edit' => Pages\EditEducationContent::route('/{record}/edit'),
         ];
     }
 }
