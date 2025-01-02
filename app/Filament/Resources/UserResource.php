@@ -86,11 +86,16 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone')
                     ->searchable(),
-                Tables\Columns\BadgeColumn::make('role')
+                Tables\Columns\TextColumn::make('role')
+                    ->label('Role')
                     ->colors([
                         'danger' => 'admin',
                         'primary' => 'user',
-                    ]),
+                    ])
+                    ->badge(),
+                Tables\Columns\TextColumn::make('balance')
+                    ->money('IDR')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('email_verified_at')
                     ->dateTime() 
                     ->sortable()
