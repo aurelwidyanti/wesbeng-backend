@@ -20,7 +20,7 @@ class EducationContentFactory extends Factory
             'title' => $this->faker->sentence,
             'content' => $this->faker->paragraph,
             'image' => $this->faker->imageUrl(),
-            'category' => $this->faker->randomElement(['organic', 'inorganic', 'B3'])
+            'category' => $this->faker->randomElement(['organic', 'anorganic', 'B3'])
         ];
     }
 }

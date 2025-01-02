@@ -38,12 +38,6 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
-
-        Schema::table('users', function (Blueprint $table) {
-            if (!Schema::hasColumn('users', 'balance')) {
-                $table->decimal('balance', 15, 2)->default(0);
-            }
-        });
     }
 
     /**

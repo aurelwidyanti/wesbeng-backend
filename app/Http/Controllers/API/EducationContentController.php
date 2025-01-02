@@ -38,7 +38,7 @@ class EducationContentController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'image' => 'required|string',
-            'category' => 'required|in:organic,inorganic,B3'
+            'category' => 'required|in:organic,anorganic,B3'
         ]);
 
         if (!$validated) {
@@ -99,7 +99,7 @@ class EducationContentController extends Controller
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'image' => 'required|string',
-            'category' => 'required|in:organic,inorganic,B3'
+            'category' => 'required|in:organic,anorganic,B3'
         ]);
 
         if (!$validated) {

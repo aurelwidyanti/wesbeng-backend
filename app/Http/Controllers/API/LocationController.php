@@ -37,7 +37,7 @@ class LocationController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
-            'category' => 'required|in:organic,inorganic,B3',
+            'category' => 'required|in:organic,anorganic,B3',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric'
         ]);
@@ -95,7 +95,7 @@ class LocationController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
-            'category' => 'required|in:organic,inorganic,B3',
+            'category' => 'required|in:organic,anorganic,B3',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric'
         ]);
