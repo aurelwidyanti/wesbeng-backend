@@ -17,7 +17,7 @@ class TrashResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-trash';
 
-    protected static ?string $navigationLabel = 'Trash Schedule';
+    protected static ?string $navigationLabel = 'Trash Collection';
 
     protected static ?int $navigationSort = 4;
 
