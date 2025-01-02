@@ -4,7 +4,7 @@ use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\Api\EducationContentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\LocationController;
+use App\Http\Controllers\API\LocationController;
 use App\Http\Controllers\API\ScheduleController;
 use App\Http\Controllers\API\TransactionController;
 
