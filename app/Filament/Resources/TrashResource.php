@@ -55,11 +55,14 @@ class TrashResource extends Resource
                             ->suffix('kg')
                             ->minValue(0)
                             ->step(0.1)
-                            ->afterStateUpdated(function ($state, $set) {
-                                // Calculate earnings based on weight
-                                $ratePerKg = 2000; // Rp 2.000 per kg
-                                $earnings = $state * $ratePerKg;
-                                $set('earnings', $earnings);
+                            ->afterStateUpdated(function ($state, $set, $get) {
+                                if ($get('type') === 'anorganic') {
+                                    $ratePerKg = 2000; // Rp 2.000 per kg
+                                    $earnings = $state * $ratePerKg;
+                                    $set('earnings', $earnings);
+                                } else {
+                                    $set('earnings', 0);
+                                }
                             }),
 
                         Forms\Components\TextInput::make('earnings')
@@ -81,11 +84,11 @@ class TrashResource extends Resource
                             ->default('pending')
                             ->label('Status')
                             ->afterStateUpdated(function ($state, callable $get, $record) {
-                                if ($state === 'processed' && $record) {
+                                if ($state === 'processed' && $record && $record->type === 'anorganic') {
                                     $user = $record->collector; // Ambil user yang mengumpulkan
                                     if ($user) {
                                         // Update balance user
-                                        $user->updateBalanceFromTrash($record->weight);
+                                        $user->updateBalanceFromTrash($record->weight, $record->type);
                                     }
                                 }
                             })

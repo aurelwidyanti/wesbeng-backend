@@ -22,15 +22,19 @@ class Trash extends Model
         parent::boot();
 
         static::saving(function ($trash) {
-            $ratePerKg = 2000; // Rp 2.000 per kg
-            $trash->earnings = $trash->weight * $ratePerKg;
+            if ($trash->type === 'anorganic') {
+                $ratePerKg = 2000; // Rp 2.000 per kg
+                $trash->earnings = $trash->weight * $ratePerKg;
+            } else {
+                $trash->earnings = 0;
+            }
         });
 
         static::saved(function ($trash) {
-            if ($trash->status === 'processed') {
+            if ($trash->status === 'processed' && $trash->type === 'anorganic') {
                 $user = $trash->collector;
                 if ($user) {
-                    $user->updateBalanceFromTrash($trash->weight);
+                    $user->updateBalanceFromTrash($trash->weight, $trash->type);
                 }
             }
         });

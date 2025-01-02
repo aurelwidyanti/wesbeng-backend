@@ -79,12 +79,14 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(Transaction::class);
     }
 
-    public function updateBalanceFromTrash($weight)
+    public function updateBalanceFromTrash($weight, $type)
     {
-        $ratePerKg = 2000; // Rate per kilogram (Rp)
-        $earnings = $weight * $ratePerKg;
-        $this->balance += $earnings;
-        $this->save();
+        if ($type === 'anorganic') {
+            $ratePerKg = 2000; // Tarif per kilogram (Rp)
+            $earnings = $weight * $ratePerKg;
+            $this->balance += $earnings;
+            $this->save();
+        }
     }
 
 }
