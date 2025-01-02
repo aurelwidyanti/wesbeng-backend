@@ -76,7 +76,11 @@ return [
      * ],
      * ```
      */
-    'servers' => null,
+    'servers' => [
+        'Local' => 'api',
+        'Live' => 'https://wesbeng.mekanikace.cloud/api',
+        'Prod' => 'https://wesbeng.mekanikace.cloud/api',
+    ],
 
     'middleware' => [
         'web',
