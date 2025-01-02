@@ -23,7 +23,7 @@ class LocationController extends Controller
             'status' => 'success',
             'message' => 'Locations retrieved successfully',
             'data' => LocationResource::collection($companies)
-        ], Response::HTTP_OK);
+        ], 200);
     }
 
     /**
@@ -47,7 +47,7 @@ class LocationController extends Controller
                 'status' => 'error',
                 'message' => 'Validation error',
                 'errors' => $validated
-            ], Response::HTTP_BAD_REQUEST);
+            ], 400);
         }
 
         $location = Location::create($validated);
@@ -56,7 +56,7 @@ class LocationController extends Controller
             'status' => 'success',
             'message' => 'Location created successfully',
             'data' => new LocationResource($location)
-        ], Response::HTTP_CREATED);
+        ], 201);
     }
 
     /**
@@ -73,14 +73,14 @@ class LocationController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Location not found'
-            ], Response::HTTP_NOT_FOUND);
+            ], 404);
         }
 
         return response()->json([
             'status' => 'success',
             'message' => 'Location retrieved successfully',
             'data' => new LocationResource($location)
-        ], Response::HTTP_OK);
+        ], 200);
     }
 
     /**
@@ -105,7 +105,7 @@ class LocationController extends Controller
                 'status' => 'error',
                 'message' => 'Validation error',
                 'errors' => $validated
-            ], Response::HTTP_BAD_REQUEST);
+            ], 400);
         }
 
         $location = Location::find($id);
@@ -114,7 +114,7 @@ class LocationController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Location not found'
-            ], Response::HTTP_NOT_FOUND);
+            ], 404);
         }
 
         $location->update($validated);
@@ -123,7 +123,7 @@ class LocationController extends Controller
             'status' => 'success',
             'message' => 'Location updated successfully',
             'data' => new LocationResource($location)
-        ], Response::HTTP_OK);
+        ], 200);
     }
 
     /**
@@ -140,7 +140,7 @@ class LocationController extends Controller
             return response()->json([
                 'status' => 'error',
                 'message' => 'Location not found'
-            ], Response::HTTP_NOT_FOUND);
+            ], 404);
         }
 
         $location->delete();
@@ -148,6 +148,6 @@ class LocationController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Location deleted successfully'
-        ], Response::HTTP_OK);
+        ], 200);
     }
 }

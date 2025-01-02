@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\EducationContentResource;
-use App\Models\EducationContent;
+use App\Http\Resources\ScheduleResource;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class EducationContentController extends Controller
+class ScheduleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,12 +17,12 @@ class EducationContentController extends Controller
      */
     public function index()
     {
-        $educationContents = EducationContent::all();
+        $companies = Schedule::with('location')->get();
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Education Contents retrieved successfully',
-            'data' => EducationContentResource::collection($educationContents)
+            'message' => 'Schedules retrieved successfully',
+            'data' => ScheduleResource::collection($companies)
         ], 200);
     }
 
@@ -35,10 +35,8 @@ class EducationContentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'image' => 'required|string',
-            'category' => 'required|in:organic,inorganic,B3'
+            'location_id' => 'required|exists:locations,id',
+            'date' => 'required|date',
         ]);
 
         if (!$validated) {
@@ -49,16 +47,12 @@ class EducationContentController extends Controller
             ], 400);
         }
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('education-contents');
-        }
-
-        $educationContent = EducationContent::create($validated);
+        $schedule = Schedule::create($validated);
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Education Content created successfully',
-            'data' => new EducationContentResource($educationContent)
+            'message' => 'Schedule created successfully',
+            'data' => new ScheduleResource($schedule)
         ], 201);
     }
 
@@ -70,19 +64,21 @@ class EducationContentController extends Controller
      */
     public function show(int $id)
     {
-        $educationContent = EducationContent::find($id);
+        $schedule = Schedule::find($id);
 
-        if (!$educationContent) {
+        if (!$schedule) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Education Content not found'
+                'message' => 'Schedule not found'
             ], 404);
         }
-        
+
+        $schedule->load('location');
+
         return response()->json([
             'status' => 'success',
-            'message' => 'Education Content retrieved successfully',
-            'data' => new EducationContentResource($educationContent)
+            'message' => 'Schedule retrieved successfully',
+            'data' => new ScheduleResource($schedule)
         ], 200);
     }
 
@@ -96,10 +92,8 @@ class EducationContentController extends Controller
     public function update(Request $request, int $id)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'image' => 'required|string',
-            'category' => 'required|in:organic,inorganic,B3'
+            'location_id' => 'required|exists:locations,id',
+            'date' => 'required|date',
         ]);
 
         if (!$validated) {
@@ -110,25 +104,21 @@ class EducationContentController extends Controller
             ], 400);
         }
 
-        $educationContent = EducationContent::find($id);
+        $schedule = Schedule::find($id);
 
-        if (!$educationContent) {
+        if (!$schedule) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Education Content not found'
+                'message' => 'Schedule not found'
             ], 404);
         }
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('education-contents');
-        }
-
-        $educationContent->update($validated);
+        $schedule->update($validated);
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Education Content updated successfully',
-            'data' => new EducationContentResource($educationContent)
+            'message' => 'Schedule updated successfully',
+            'data' => new ScheduleResource($schedule)
         ], 200);
     }
 
@@ -140,20 +130,20 @@ class EducationContentController extends Controller
      */
     public function destroy(int $id)
     {
-        $educationContent = EducationContent::find($id);
+        $schedule = Schedule::find($id);
 
-        if (!$educationContent) {
+        if (!$schedule) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Education Content not found'
+                'message' => 'Schedule not found'
             ], 404);
         }
 
-        $educationContent->delete();
+        $schedule->delete();
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Education Content deleted successfully'
+            'message' => 'Schedule deleted successfully'
         ], 200);
     }
 }
