@@ -21,6 +21,8 @@ class TransactionResource extends JsonResource
             'amount' => $this->amount,
             'status' => $this->status,
             'remarks' => $this->remarks,
+            'ewallet_name' => $this->ewallet_name,
+            'ewallet_number' => $this->ewallet_number,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'user' => $this->user,

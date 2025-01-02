@@ -42,6 +42,24 @@ class TransactionResource extends Resource
                             ->numeric()
                             ->placeholder('Enter transaction amount'),
 
+                        Forms\Components\Select::make('ewallet_name')
+                            ->label('E-Wallet Name')
+                            ->options([
+                                'spay' => 'Spay',
+                                'dana' => 'Dana',
+                                'ovo' => 'Ovo',
+                                'linkaja' => 'LinkAja',
+                            ])
+                            ->required()
+                            ->searchable(),
+
+                        Forms\Components\TextInput::make('ewallet_number')
+                            ->label('E-Wallet Number')
+                            ->placeholder('Enter e-wallet number')
+                            ->required()
+                            ->numeric()
+                            ->maxLength(20),
+
                         Forms\Components\Select::make('type')
                             ->label('Transaction Type')
                             ->required()
@@ -55,7 +73,7 @@ class TransactionResource extends Resource
                             ->label('Remarks')
                             ->rows(3)
                             ->placeholder('Provide additional details about the transaction'),
-                        
+
                         Forms\Components\Select::make('status')
                             ->label('Status')
                             ->required()
@@ -83,16 +101,32 @@ class TransactionResource extends Resource
                     ->sortable()
                     ->money('IDR'),
 
+                Tables\Columns\TextColumn::make('ewallet_name')
+                    ->label('E-Wallet Name')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'spay' => 'primary',
+                        'dana' => 'success',
+                        'ovo' => 'warning',
+                        'linkaja' => 'danger',
+                        default => 'gray',
+                    })
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('ewallet_number')
+                    ->label('E-Wallet Number')
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('type')
                     ->label('Type')
                     ->badge()
-                    ->color(fn (string $state): string => $state === 'deposit' ? 'success' : 'danger')
+                    ->color(fn(string $state): string => $state === 'deposit' ? 'success' : 'danger')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'pending' => 'warning',
                         'approved' => 'success',
                         'rejected' => 'danger',
@@ -103,7 +137,7 @@ class TransactionResource extends Resource
                 Tables\Columns\TextColumn::make('remarks')
                     ->label('Remarks')
                     ->limit(50)
-                    ->tooltip(fn ($record) => $record->remarks),
+                    ->tooltip(fn($record) => $record->remarks),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Created')

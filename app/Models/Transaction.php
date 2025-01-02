@@ -17,6 +17,8 @@ class Transaction extends Model
         'amount',
         'status',
         'remarks',
+        'ewallet_name',
+        'ewallet_number',
     ];
 
     /**

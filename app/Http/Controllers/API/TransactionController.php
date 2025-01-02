@@ -28,6 +28,8 @@ class TransactionController extends Controller
         $validated = $request->validate([
             'amount' => 'required|numeric|min:10000',
             'remarks' => 'nullable|string',
+            'ewallet_name' => 'required|string',
+            'ewallet_number' => 'required|string',
         ]);
 
         $user = $request->user();
@@ -44,6 +46,8 @@ class TransactionController extends Controller
             'amount' => $validated['amount'],
             'status' => 'pending',
             'remarks' => $validated['remarks'],
+            'ewallet_name' => $validated['ewallet_name'],
+            'ewallet_number' => $validated['ewallet_number'],
         ]);
 
         $user->balance -= $validated['amount'];
