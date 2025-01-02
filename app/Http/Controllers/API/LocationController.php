@@ -17,12 +17,12 @@ class LocationController extends Controller
      */
     public function index()
     {
-        $companies = Location::all();
+        $locations = Location::all();
 
         return response()->json([
             'status' => 'success',
             'message' => 'Locations retrieved successfully',
-            'data' => LocationResource::collection($companies)
+            'data' => LocationResource::collection($locations)
         ], 200);
     }
 

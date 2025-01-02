@@ -17,12 +17,12 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $companies = Schedule::with('location')->get();
+        $schedules = Schedule::with('location')->get();
 
         return response()->json([
             'status' => 'success',
             'message' => 'Schedules retrieved successfully',
-            'data' => ScheduleResource::collection($companies)
+            'data' => ScheduleResource::collection($schedules)
         ], 200);
     }
 
