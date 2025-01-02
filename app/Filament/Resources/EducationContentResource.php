@@ -57,7 +57,7 @@ class EducationContentResource extends Resource
                             ->required()
                             ->options([
                                 'organic' => 'Organik',
-                                'anorganic' => 'Anorganik',
+                                'anorganic' => 'Anorganik', 
                                 'B3' => 'Bahan Berbahaya & Beracun',
                             ])
                             ->searchable(),
@@ -104,7 +104,7 @@ class EducationContentResource extends Resource
                     ->label('Filter by Category')
                     ->options([
                         'organic' => 'Organik',
-                        'anorganic' => 'Anorganik',
+                        'anorganic' => 'Anorganik', 
                         'B3' => 'Bahan Berbahaya & Beracun',
                     ]),
             ])

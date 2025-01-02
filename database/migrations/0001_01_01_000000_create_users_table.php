@@ -1,4 +1,4 @@
-]<?php
+<?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -37,6 +37,12 @@ return new class extends Migration
             $table->text('user_agent')->nullable();
             $table->longText('payload');
             $table->integer('last_activity')->index();
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            if (!Schema::hasColumn('users', 'balance')) {
+                $table->decimal('balance', 15, 2)->default(0);
+            }
         });
     }
 

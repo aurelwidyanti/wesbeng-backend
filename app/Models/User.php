@@ -27,6 +27,7 @@ class User extends Authenticatable implements FilamentUser
         'phone',
         'role',
         'password',
+        'balance', // Add balance to fillable
         'email_verified_at',
     ];
 
@@ -76,6 +77,14 @@ class User extends Authenticatable implements FilamentUser
     public function transactions()
     {
         return $this->hasMany(Transaction::class);
+    }
+
+    public function updateBalanceFromTrash($weight)
+    {
+        $ratePerKg = 2000; // Rate per kilogram (Rp)
+        $earnings = $weight * $ratePerKg;
+        $this->balance += $earnings;
+        $this->save();
     }
 
 }

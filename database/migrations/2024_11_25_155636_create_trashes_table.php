@@ -15,15 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('location_id')->constrained()->onDelete('cascade');
             $table->enum('type', ['organic', 'anorganic', 'B3']);
-            $table->decimal('volume', 10, 2); 
-            $table->decimal('weight', 10, 2); 
+            $table->decimal('weight', 10, 2); // Volume is removed, only weight is kept
+            $table->decimal('earnings', 15, 2)->default(0); // Tambahkan kolom earnings
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->date('collection_date');
             $table->enum('status', ['pending', 'collected', 'processed'])->default('pending');
             $table->timestamps();
-
-            // Adding indexes
-            $table->index('location_id');
-            $table->index('status');
         });
     }
 
