@@ -54,7 +54,7 @@ class User extends Authenticatable implements FilamentUser
         ];
     }
 
-    public function canAccessPanel(Panel $panel)
+    public function canAccessPanel(Panel $panel): bool
     {
         return true;
     }
