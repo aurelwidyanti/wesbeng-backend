@@ -24,9 +24,9 @@ class User extends Authenticatable
         'phone',
         'role',
         'password',
-        'email_verified_at',  
+        'email_verified_at',
     ];
-    
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -50,4 +50,24 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the user's balance.
+     *
+     * @param  float  $value
+     * @return string
+     */
+    public function getBalanceAttribute($value)
+    {
+        return number_format($value, 2, '.', '');
+    }
+
+    /**
+     * Get the user's transactions.
+     */
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
 }
